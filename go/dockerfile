@@ -1,0 +1,23 @@
+FROM golang:1.20-alpine3.18 as pre-build
+
+WORKDIR /build
+
+COPY . .
+
+RUN go mod init main
+
+RUN go build -o server.bin
+
+FROM alpine:3.18
+
+WORKDIR /run
+
+EXPOSE 8080
+
+COPY --from=pre-build /build/server.bin .
+
+ENV PATH=$PATH:/run
+
+CMD server.bin
+
+

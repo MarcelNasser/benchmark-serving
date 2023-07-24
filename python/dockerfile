@@ -1,0 +1,11 @@
+FROM python:3.11-alpine3.18
+
+EXPOSE 8000
+
+WORKDIR /run
+
+COPY main.py .
+
+RUN pip install redis
+
+CMD python main.py

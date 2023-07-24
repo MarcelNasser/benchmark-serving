@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+
+  go-hello-world:
+    container_name: go-hello-world
+    image: marcelndeffo/tests:go
+    build: go
+    ports:
+      - "8080:8080"
+    environment:
+      USER: go
+      PASSWORD: go
+      DB: go
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.1
+    hostname: go-hello-world
+
+  python-hello-world:
+    container_name: python-hello-world
+    image: marcelndeffo/tests:python
+    build: python
+    ports:
+      - "8000:8000"
+    environment:
+      USER: python
+      PASSWORD: python
+      DB: python
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.2
+    hostname: python-hello-world
+
+
+#  nodejs-hello-world:
+#    container_name: nodejs-hello-world
+#    image: marcelndeffo/tests:nodejs
+#    build: nodejs
+#    ports:
+#      - "8081:8081"
+
+
+  redis:
+    container_name: redis
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.5
+    hostname: redis
+
+
+networks:
+  test_vnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
