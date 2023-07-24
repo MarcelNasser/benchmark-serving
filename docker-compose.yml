@@ -2,51 +2,93 @@ version: '3.7'
 
 services:
 
-  go-hello-world:
-    container_name: go-hello-world
-    image: marcelndeffo/tests:go
+  redis:
+    container_name: redis
+    image: redis:latest
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "1GB"
+    ports:
+      - "6379:6379"
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.5
+
+  go-server:
+    extends:
+      service: .server
+      file: docker-compose-template.yml
+    container_name: go-server
+    image: marcelndeffo/tests:go-server
     build: go
     ports:
       - "8080:8080"
     environment:
-      USER: go
-      PASSWORD: go
-      DB: go
+      USERNAME: ${USERNAME:-default}
+      PASSWORD: ${PASSWORD:-}
+      DB: 0
     networks:
       test_vnet:
-        ipv4_address: 172.16.0.1
-    hostname: go-hello-world
+        ipv4_address: 172.16.0.2
 
-  python-hello-world:
-    container_name: python-hello-world
-    image: marcelndeffo/tests:python
+
+  python-server:
+    extends:
+      service: .server
+      file: docker-compose-template.yml
+    container_name: python-server
+    image: marcelndeffo/tests:python-server
     build: python
     ports:
       - "8000:8000"
     environment:
-      USER: python
-      PASSWORD: python
-      DB: python
+      USERNAME: ${USERNAME:-default}
+      PASSWORD: ${PASSWORD:-}
+      DB: 1
     networks:
       test_vnet:
-        ipv4_address: 172.16.0.2
-    hostname: python-hello-world
+        ipv4_address: 172.16.0.3
 
 
-#  nodejs-hello-world:
-#    container_name: nodejs-hello-world
-#    image: marcelndeffo/tests:nodejs
-#    build: nodejs
-#    ports:
-#      - "8081:8081"
-
-
-  redis:
-    container_name: redis
+  nodejs-server:
+    extends:
+      service: .server
+      file: docker-compose-template.yml
+    container_name: nodejs-server
+    image: marcelndeffo/tests:nodejs-server
+    build: nodejs
+    ports:
+      - "9000:9000"
+    environment:
+      USERNAME: ${USERNAME:-default}
+      PASSWORD: ${PASSWORD:-}
+      DB: 2
     networks:
       test_vnet:
-        ipv4_address: 172.16.0.5
-    hostname: redis
+        ipv4_address: 172.16.0.4
+
+
+  monitoring:
+    container_name: monitoring
+    image: gcr.io/cadvisor/cadvisor:v0.36.0
+    ports:
+      - "3000:8080"
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.6
+    volumes:
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
+      - "/sys:/sys:ro"
+      - "/var/run:/var/run:ro"
+      - "/:/rootfs:ro"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "1GB"
 
 
 networks:

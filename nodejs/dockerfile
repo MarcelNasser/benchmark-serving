@@ -1,20 +1,22 @@
-FROM node:20-alpine3.18 as pre-build
+FROM node:alpine
+#as pre-build
 
 WORKDIR /build
 
-COPY main.js .
+COPY . .
 
 RUN npm install
 
-RUN npm run build
+CMD node main.js
 
-FROM alpine:3.18
+#FROM astefanutti/scratch-node
+##
+#WORKDIR /run
+##
+#EXPOSE 9000
+##
+##COPY --from=pre-build /build/ .
+##
+#CMD node main.js
 
-EXPOSE 8081
-
-RUN apk add npm
-
-COPY --from=pre-build /build/dist /.dist
-
-CMD npm start
 

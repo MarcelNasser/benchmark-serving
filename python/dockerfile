@@ -4,8 +4,8 @@ EXPOSE 8000
 
 WORKDIR /run
 
-COPY main.py .
-
 RUN pip install redis
+
+COPY main.py .
 
 CMD python main.py

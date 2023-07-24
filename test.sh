@@ -11,25 +11,42 @@ function test(){
 
 function parallel() {
   pid=()
-  n=$2
-  for i in $(seq 1 $n); do
-    test "$1" &
+  for i in $(seq 1 "$1"); do
+    "$2" "$3" &
     pid+=($!)
   done
   for p in "${pid[@]}"; do
-    #echo waiting .. $p
     wait "$p"
   done
 }
+TIMEFORMAT=%R
 
-echo "#0: Test 'Python' Server (8000)"
+RUNNERS=${RUNNERS:-30}
+#
+echo -e "RUNNERS #: $RUNNERS"
+####################
+#### PYTHON #####
+####################
+sleep 1
+echo -n "#00: Test 'Python' Server (8000) with 1 runner, time = "
 time test 8000
-echo -e "\n"
-echo "#1: Test 'Go' Server (8080)"
+echo -n "#01: Test 'Python' Server (8000) with $RUNNERS runners, time = "
+time parallel "$RUNNERS" test 8000
+####################
+#### Go #####
+####################
+sleep 1
+echo -n "#10: Test 'Go' Server (8080) with 1 runner, time = "
 time test 8080
-echo -e "\n"
-echo "#2: Test 'Python' Server (8000) with 30 runners"
-time parallel 8000 30
-echo -e "\n"
-echo "#3: Test 'Go' Server (8080) with 30 runners"
-time parallel 8080 30
+echo -n "#11: Test 'Go' Server (8080) with $RUNNERS runners, time = "
+time parallel "$RUNNERS" test 8080
+####################
+#### NodeJs #####
+####################
+sleep 1
+echo -n "#20: Test 'NodeJs' Server (9000) with 1 runner, time = "
+time test 9000
+echo -n "#21: Test 'NodeJs' Server (9000) with $RUNNERS runners, time = "
+time parallel "$RUNNERS" test 9000
+
+unset TIMEFORMAT

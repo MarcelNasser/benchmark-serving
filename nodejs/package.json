@@ -1,0 +1,27 @@
+{
+  "name": "server-nodejs",
+  "version": "0.0.1",
+  "description": "hello world server",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcelNasser/benchmark-serving.git"
+  },
+  "keywords": [
+    "hello-word",
+    "nodejs",
+    "server"
+  ],
+  "author": "Marcel Nasser",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarcelNasser/benchmark-serving/issues"
+  },
+  "homepage": "https://github.com/MarcelNasser/benchmark-serving#readme",
+  "dependencies": {
+    "redis": "^4.6.7"
+  }
+}
