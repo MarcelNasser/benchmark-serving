@@ -17,7 +17,7 @@ services:
       service: .server
       file: docker-compose-server.yml
     container_name: go-server
-    image: marcelndeffo/tests:go-server
+    image: marcelndeffo/tests:go-helloworld
     build: go
     ports:
       - "8002:8000"
@@ -36,7 +36,7 @@ services:
       service: .server
       file: docker-compose-server.yml
     container_name: python-server
-    image: marcelndeffo/tests:python-server
+    image: marcelndeffo/tests:python-helloworld
     build:
       context: python
       dockerfile: dockerfile
@@ -57,7 +57,7 @@ services:
       service: .server
       file: docker-compose-server.yml
     container_name: python-fastapi
-    image: marcelndeffo/tests:python-fastapi
+    image: marcelndeffo/tests:fastapi-helloworld
     build:
       context: python-fastapi
       dockerfile: dockerfile
@@ -78,7 +78,7 @@ services:
       service: .server
       file: docker-compose-server.yml
     container_name: nodejs-server
-    image: marcelndeffo/tests:nodejs-server
+    image: marcelndeffo/tests:nodejs-helloworld
     build: nodejs
     ports:
       - "8003:8000"
