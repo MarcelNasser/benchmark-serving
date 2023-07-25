@@ -1,7 +1,8 @@
-version: '2.4'
+version: '3.5'
 
 services:
-
+  # redis DB:
+  ## redis can be reached through the private address
   redis:
     container_name: redis
     image: redis:latest
@@ -9,6 +10,8 @@ services:
       test_vnet:
         ipv4_address: 172.16.0.5
 
+  # go-server:
+  ## server can be reached through the private address
   go-server:
     extends:
       service: .server
@@ -17,7 +20,7 @@ services:
     image: marcelndeffo/tests:go-server
     build: go
     ports:
-      - "8080:8000"
+      - "8002:8000"
     environment:
       USERNAME: ${USERNAME:-default}
       PASSWORD: ${PASSWORD:-}
@@ -26,6 +29,8 @@ services:
       test_vnet:
         ipv4_address: 172.16.0.2
 
+  # python-server1: uses default HttpServer Lib of python
+  ## server can be reached through the private address
   python-server:
     extends:
       service: .server
@@ -45,6 +50,8 @@ services:
       test_vnet:
         ipv4_address: 172.16.0.3
 
+  # python-server2: uses fastapi
+  ## server can be reached through the private address
   python-fastapi:
     extends:
       service: .server
@@ -64,6 +71,8 @@ services:
       test_vnet:
         ipv4_address: 172.16.0.8
 
+  # nodejs-server:
+  ## server can be reached through the private address
   nodejs-server:
     extends:
       service: .server
@@ -72,7 +81,7 @@ services:
     image: marcelndeffo/tests:nodejs-server
     build: nodejs
     ports:
-      - "9000:8000"
+      - "8003:8000"
     environment:
       USERNAME: ${USERNAME:-default}
       PASSWORD: ${PASSWORD:-}
@@ -98,7 +107,10 @@ services:
 
   load-server:
     container_name: load-server
-    cpus: 0.5
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5 # just in case locust spirals out of control
     image: locustio/locust
     ports:
       - "8089:8089"
@@ -107,7 +119,6 @@ services:
     command: -f /mnt/locust/locustfile.py
     environment:
       SERVER: python
-      PORT: 8000
     networks:
       test_vnet:
         ipv4_address: 172.16.0.7

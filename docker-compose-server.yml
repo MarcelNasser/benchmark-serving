@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+
+  .server:
+    container_name: server
+    image: busybox
+    deploy:
+      resources:
+        limits:
+          ## The most critical parameter of the benchmark
+          ## is this Guy =>>
+          cpus: 0.04
+          ## set a reasonable value according to the hardware
+          ## for a 12 cores CPU a value between 0.04 and 0.33
+          ## human translation: the bench will use between 0.5 and 4 cores
+          memory: "150MB"
+    hostname: server
+    extra_hosts:
+      - "redis:172.16.0.5"
+    depends_on:
+      - redis
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "5"
+    healthcheck:
+        test: wget -qO- --tries=3 --timeout=2 server:8000 || exit 1
+        interval: 20s
+        timeout: 10s
+        retries: 6
+        start_period: 10s
