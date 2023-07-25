@@ -1,17 +1,10 @@
-version: '3.7'
+version: '2.4'
 
 services:
 
   redis:
     container_name: redis
     image: redis:latest
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "1GB"
-    ports:
-      - "6379:6379"
     networks:
       test_vnet:
         ipv4_address: 172.16.0.5
@@ -19,12 +12,12 @@ services:
   go-server:
     extends:
       service: .server
-      file: docker-compose-template.yml
+      file: .build/docker-compose-template.yml
     container_name: go-server
     image: marcelndeffo/tests:go-server
     build: go
     ports:
-      - "8080:8080"
+      - "8080:8000"
     environment:
       USERNAME: ${USERNAME:-default}
       PASSWORD: ${PASSWORD:-}
@@ -33,14 +26,15 @@ services:
       test_vnet:
         ipv4_address: 172.16.0.2
 
-
   python-server:
     extends:
       service: .server
-      file: docker-compose-template.yml
+      file: .build/docker-compose-template.yml
     container_name: python-server
     image: marcelndeffo/tests:python-server
-    build: python
+    build:
+      context: python
+      dockerfile: dockerfile
     ports:
       - "8000:8000"
     environment:
@@ -51,16 +45,34 @@ services:
       test_vnet:
         ipv4_address: 172.16.0.3
 
+  python-fastapi:
+    extends:
+      service: .server
+      file: .build/docker-compose-template.yml
+    container_name: python-fastapi
+    image: marcelndeffo/tests:python-fastapi
+    build:
+      context: python-fastapi
+      dockerfile: dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      USERNAME: ${USERNAME:-default}
+      PASSWORD: ${PASSWORD:-}
+      DB: 3
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.8
 
   nodejs-server:
     extends:
       service: .server
-      file: docker-compose-template.yml
+      file: .build/docker-compose-template.yml
     container_name: nodejs-server
     image: marcelndeffo/tests:nodejs-server
     build: nodejs
     ports:
-      - "9000:9000"
+      - "9000:8000"
     environment:
       USERNAME: ${USERNAME:-default}
       PASSWORD: ${PASSWORD:-}
@@ -68,7 +80,6 @@ services:
     networks:
       test_vnet:
         ipv4_address: 172.16.0.4
-
 
   monitoring:
     container_name: monitoring
@@ -84,12 +95,27 @@ services:
       - "/sys:/sys:ro"
       - "/var/run:/var/run:ro"
       - "/:/rootfs:ro"
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "1GB"
 
+  load-server:
+    container_name: load-server
+    cpus: 0.5
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - "./bench/locust/:/mnt/locust"
+    command: -f /mnt/locust/locustfile.py
+    environment:
+      SERVER: python
+      PORT: 8000
+    networks:
+      test_vnet:
+        ipv4_address: 172.16.0.7
+    extra_hosts:
+      - "go:172.16.0.2"
+      - "python:172.16.0.3"
+      - "nodejs:172.16.0.4"
+      - "fastapi:172.16.0.8"
 
 networks:
   test_vnet:

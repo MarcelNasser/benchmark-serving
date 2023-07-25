@@ -4,20 +4,23 @@ WORKDIR /build
 
 COPY . .
 
-#RUN go mod init main
-
-RUN go build -o server.bin
+#Build binary
+RUN go build -o main
 
 FROM alpine:3.18
 
+EXPOSE 8000
+
 WORKDIR /run
 
-EXPOSE 8080
+#security: server permissions
+RUN addgroup -S server && adduser -S -D -h /run server server
 
-COPY --from=pre-build /build/server.bin .
+USER server
+
+#Copy binary
+COPY --from=pre-build --chown=server:server /build/main /run
 
 ENV PATH=$PATH:/run
 
-CMD server.bin
-
-
+CMD main

@@ -7,7 +7,7 @@ RUN apk add binutils
 RUN pip install pyinstaller
 
 #Application requirements
-RUN pip install redis
+RUN pip install redis fastapi uvicorn
 
 #Sources
 COPY main.py .

@@ -1,5 +1,4 @@
-FROM node:alpine
-#as pre-build
+FROM node:18-alpine3.18 as pre-build
 
 WORKDIR /build
 
@@ -7,16 +6,24 @@ COPY . .
 
 RUN npm install
 
-CMD node main.js
-
-#FROM astefanutti/scratch-node
-##
-#WORKDIR /run
-##
-#EXPOSE 9000
-##
-##COPY --from=pre-build /build/ .
-##
-#CMD node main.js
+#Build binary
+RUN npm i pkg -g && pkg -t node18-alpine-x64 main.js -o main
 
 
+FROM alpine:3.18
+
+EXPOSE 8000
+
+WORKDIR /run
+
+#security: server permissions
+RUN addgroup -S server && adduser -S -D -h /run server server
+
+USER server
+
+#Copy binary
+COPY --from=pre-build --chown=server:server /build/main /run
+
+ENV PATH=$PATH:/run
+
+CMD main

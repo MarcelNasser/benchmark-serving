@@ -1,18 +1,18 @@
-version: '3.7'
+version: '2.4'
 
 services:
 
   .server:
     container_name: server
     image: busybox
-    deploy:
-      resources:
-        limits:
-          cpus: "0.08"
-          memory: "500MB"
+    cpus: 0.1
+    mem_limit: "500MB"
     hostname: server
     extra_hosts:
       - "redis:172.16.0.5"
     depends_on:
       - redis
-
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "5"
