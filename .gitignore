@@ -4,3 +4,4 @@ nodejs/node_modules/
 python/dist/
 python/build/
 *.spec
+__pycache__/

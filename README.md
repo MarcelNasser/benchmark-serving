@@ -29,32 +29,33 @@ check `hello-world` responses:
 benchmark(s):
 
 - setup:
-The most critical parameter of the benchmark is here
+
+The most critical parameter of the benchmark is in the [docker-compose-server.yml](./docker-compose-server.yml)
 ````yaml
-#0: Test 'Python' Server (8000) with 200 runners, time = 5.212
-#1: Test 'Fastapi' Server (8001) with 200 runners, time = 5.303
-#2: Test 'Go' Server (8002) with 200 runners, time = 5.276
-#3: Test 'NodeJs' Server (8003) with 200 runners, time = 5.234
+services:
+
+  .server:
+    container_name: server
+    image: busybox
+    deploy:
+      resources:
+        limits:
+          ## The most critical parameter of the benchmark
+          ## is this Guy =>>
+          cpus: 0.04
+          ## set a reasonable value according to the hardware
+          ## for a 12 cores CPU a value between 0.04 and 0.33
+          ## human translation: the bench will use between 0.5 and 4 cores
+          memory: "150MB"
 ````
 
-
-
-- method #1: manual 
-
+Then, update de deployment:
 ````bash
-## send 6000 requests to each server
-$ bash bench/manual/run.sh
-````
-````output
-#0: Test 'Python' Server (8000) with 200 runners, time = 5.212
-#1: Test 'Fastapi' Server (8001) with 200 runners, time = 5.303
-#2: Test 'Go' Server (8002) with 200 runners, time = 5.276
-#3: Test 'NodeJs' Server (8003) with 200 runners, time = 5.234
+$ docker compose up -d
 ````
 
-````bash
-## control # of runners and requests per runner
-$ RUNNERS=100 REQUESTS=100 bash bench/manual/run.sh
-````
 
-- method #2: locust 
+- method #1: manual => [doc](./bench/locust/readme.MD)
+
+
+- method #2: locust => [doc](./bench/locust/readme.MD)

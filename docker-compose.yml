@@ -15,7 +15,7 @@ services:
   go-server:
     extends:
       service: .server
-      file: .build/docker-compose-template.yml
+      file: docker-compose-server.yml
     container_name: go-server
     image: marcelndeffo/tests:go-server
     build: go
@@ -34,7 +34,7 @@ services:
   python-server:
     extends:
       service: .server
-      file: .build/docker-compose-template.yml
+      file: docker-compose-server.yml
     container_name: python-server
     image: marcelndeffo/tests:python-server
     build:
@@ -55,7 +55,7 @@ services:
   python-fastapi:
     extends:
       service: .server
-      file: .build/docker-compose-template.yml
+      file: docker-compose-server.yml
     container_name: python-fastapi
     image: marcelndeffo/tests:python-fastapi
     build:
@@ -76,7 +76,7 @@ services:
   nodejs-server:
     extends:
       service: .server
-      file: .build/docker-compose-template.yml
+      file: docker-compose-server.yml
     container_name: nodejs-server
     image: marcelndeffo/tests:nodejs-server
     build: nodejs
@@ -110,7 +110,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 0.5 # just in case locust spirals out of control
+          cpus: '0.5' # just in case locust spirals out of control
     image: locustio/locust
     ports:
       - "8089:8089"

@@ -10,7 +10,7 @@ services:
         limits:
           ## The most critical parameter of the benchmark
           ## is this Guy =>>
-          cpus: 0.04
+          cpus: '0.04'
           ## set a reasonable value according to the hardware
           ## for a 12 cores CPU a value between 0.04 and 0.33
           ## human translation: the bench will use between 0.5 and 4 cores
