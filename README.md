@@ -1,5 +1,8 @@
 # benchmark-serving
 
+![example workflow](https://github.com/MarcelNasser/benchmark-serving/actions/workflows/docker.yml/badge.svg)
+
+
 investigation of legendary performance gap between languages.
 
 benchmark of hello-world servers with different language (go, python, nodejs...).
