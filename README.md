@@ -26,12 +26,12 @@ in this repo we demonstrate the following:
 - targeting maximum traffic and a response time below [200ms](https://developers.google.com/speed/docs/insights/Server?hl=fr).
 
 
-- 0.5 cpu core are given to each server.
-
 ---
 ### result(s)
 
 synthetic results.
+
+- for `0.5` cpu core.
 
 | server  | req/s | users* |
 |---------|-------|--------|
@@ -39,6 +39,27 @@ synthetic results.
 | nodejs  | 490   | 170    |
 | python  | 90    | 30     |
 | fastapi | 75    | 40     |
+
+
+- for `1.` cpu core.
+
+| server  | req/s | users* |
+|---------|-------|--------|
+| go      | 970   | 350    |
+| nodejs  | 1000  | 350    |
+| python  | 190   | 65     |
+| fastapi | 170   | 80     |
+
+
+- for `1.5` cpu core.
+
+| server  | req/s | users* |
+|---------|-------|--------|
+| go      | 1300  | 500    |
+| nodejs  | 1400  | 500    |
+| python  | 330   | 110    |
+| fastapi | 260   | 120    |
+
 
 *maximum users connected with a [reasonable](https://developers.google.com/speed/docs/insights/Server?hl=fr) response time.
 
