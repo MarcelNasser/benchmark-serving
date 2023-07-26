@@ -1,13 +1,18 @@
-FROM python:3.11-alpine3.18 as pre-build
+FROM python:3.10-alpine3.18 as pre-build
 
 WORKDIR /build
+
+ARG FASTAPI_VERSION=0.100.0
+ARG UVICORN_VERSION=0.23.0
+ARG REDIS_VERSION=0.6.0
+
 
 #For python compilation into a single binary
 RUN apk add binutils
 RUN pip install pyinstaller
 
 #Application requirements
-RUN pip install redis fastapi uvicorn
+RUN pip install redis==$REDIS_VERSION fastapi==$FASTAPI_VERSION uvicorn==$UVICORN_VERSION
 
 #Sources
 COPY main.py .
