@@ -8,11 +8,13 @@
 
 in this repo we demonstrate the following:
 
-**" nodejs and go are x5 faster than python for webapps "**
+**" nodejs and go perform x5 faster than python for webapps "**
 
-**" a pythonic app will cost you 5 times more "**
+**" a well-rounded pythonic app will cost you 5 times more "**
 
-**" python is not recommended for huge production "**
+**" hardware sizes for python apps is not magical thinking "**
+
+**" performance degradation of webapps can be predicted and compromised "**
 
 ---
 
