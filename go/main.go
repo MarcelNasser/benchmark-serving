@@ -18,7 +18,7 @@ func main() {
 		log.Printf("Bad db number '%s'", os.Getenv("DB"))
 		panic(err)
 	}
-    connexion_string:=fmt.Sprintf("redis://%s:%s@redis:6379/%d",os.Getenv("USERNAME"),os.Getenv("PASSWORD"),db)
+    connexion_string:=fmt.Sprintf("redis://@redis:6379/%d",db)
     opt, err := redis.ParseURL(connexion_string)
     if err != nil {
         log.Println(err)

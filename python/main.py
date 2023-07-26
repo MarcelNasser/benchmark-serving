@@ -9,8 +9,6 @@ logger = getLogger("python-server")
 basicConfig(level=ERROR, format="%(levelname)s: %(message)s")
 
 r = redis.Redis(host='redis', port=6379,
-                username=os.environ.get("USERNAME", ""),
-                password=os.environ.get("PASSWORD", ""),
                 db= int(os.environ.get("DB", 0)),
                 decode_responses=True)
 

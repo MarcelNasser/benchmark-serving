@@ -40,3 +40,7 @@ services:
         limits:
           cpus: '0.25'
           memory: '2GB'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "50"
