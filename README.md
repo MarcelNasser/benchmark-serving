@@ -33,32 +33,32 @@ synthetic results.
 
 - for `0.5` cpu core.
 
-| server  | req/s | users* |
-|---------|-------|--------|
-| go      | 400   | 150    |
-| nodejs  | 490   | 170    |
-| python  | 90    | 30     |
-| fastapi | 75    | 40     |
+| server           | req/s | users* |
+|------------------|-------|--------|
+| go               | 400   | 150    |
+| nodejs           | 490   | 170    |
+| python (native)  | 90    | 30     |
+| python (fastapi) | 75    | 40     |
 
 
 - for `1.` cpu core.
 
-| server  | req/s | users* |
-|---------|-------|--------|
-| go      | 970   | 350    |
-| nodejs  | 1000  | 350    |
-| python  | 190   | 65     |
-| fastapi | 170   | 80     |
+| server           | req/s | users* |
+|------------------|-------|--------|
+| go               | 970   | 350    |
+| nodejs           | 1000  | 350    |
+| python (native)  | 190   | 65     |
+| python (fastapi) | 170   | 80     |
 
 
 - for `1.5` cpu core.
 
-| server  | req/s | users* |
-|---------|-------|--------|
-| go      | 1300  | 500    |
-| nodejs  | 1400  | 500    |
-| python  | 330   | 110    |
-| fastapi | 260   | 120    |
+| server           | req/s | users* |
+|------------------|-------|--------|
+| go               | 1300  | 500    |
+| nodejs           | 1400  | 500    |
+| python (native)  | 330   | 110    |
+| python (fastapi) | 260   | 120    |
 
 
 *maximum users connected with a [reasonable](https://developers.google.com/speed/docs/insights/Server?hl=fr) response time.
