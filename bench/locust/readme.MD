@@ -20,12 +20,12 @@ connect to locust => [localhost:8089](http://localhost:8089).
 
 set the server.
 
-| server(s) | url(s)              |
-|-----------|---------------------|
-| fastapi   | http://fastapi:8000 |
-| go        | http://go:8000      |
-| nodejs    | http://nodejs:8000  |
-| python    | http://python:8000  |
+| server(s)        | url(s)              |
+|------------------|---------------------|
+| go               | http://go:8000      |
+| nodejs           | http://nodejs:8000  |
+| python (native)  | http://python:8000  |
+| python (fastapi) | http://fastapi:8000 |
 
 ---
 define a load protocol. example:
