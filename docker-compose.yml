@@ -4,10 +4,13 @@ services:
   # redis DB:
   ## redis can be reached through the private address
   redis:
+    extends:
+      service: .shared
+      file: docker-compose-server.tmpl.yml
     container_name: redis
     image: redis:latest
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.5
 
   # go-server:
@@ -15,7 +18,7 @@ services:
   go-server:
     extends:
       service: .server
-      file: docker-compose-server.yml
+      file: docker-compose-server.tmpl.yml
     container_name: go-server
     image: marcelndeffo/tests:go-helloworld
     build: go
@@ -26,7 +29,7 @@ services:
       PASSWORD: ${PASSWORD:-}
       DB: 0
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.2
 
   # python-server1: uses default HttpServer Lib of python
@@ -34,7 +37,7 @@ services:
   python-server:
     extends:
       service: .server
-      file: docker-compose-server.yml
+      file: docker-compose-server.tmpl.yml
     container_name: python-server
     image: marcelndeffo/tests:python-helloworld
     build:
@@ -47,7 +50,7 @@ services:
       PASSWORD: ${PASSWORD:-}
       DB: 1
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.3
 
   # python-server2: uses fastapi
@@ -55,7 +58,7 @@ services:
   python-fastapi:
     extends:
       service: .server
-      file: docker-compose-server.yml
+      file: docker-compose-server.tmpl.yml
     container_name: python-fastapi
     image: marcelndeffo/tests:fastapi-helloworld
     build:
@@ -68,7 +71,7 @@ services:
       PASSWORD: ${PASSWORD:-}
       DB: 3
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.8
 
   # nodejs-server:
@@ -76,7 +79,7 @@ services:
   nodejs-server:
     extends:
       service: .server
-      file: docker-compose-server.yml
+      file: docker-compose-server.tmpl.yml
     container_name: nodejs-server
     image: marcelndeffo/tests:nodejs-helloworld
     build: nodejs
@@ -87,16 +90,19 @@ services:
       PASSWORD: ${PASSWORD:-}
       DB: 2
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.4
 
   monitoring:
+    extends:
+      service: .shared
+      file: docker-compose-server.tmpl.yml
     container_name: monitoring
     image: gcr.io/cadvisor/cadvisor:v0.36.0
     ports:
       - "3000:8080"
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.6
     volumes:
       - "/var/lib/docker/:/var/lib/docker:ro"
@@ -105,12 +111,11 @@ services:
       - "/var/run:/var/run:ro"
       - "/:/rootfs:ro"
 
-  load-server:
-    container_name: load-server
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5' # just in case locust spirals out of control
+  locust:
+    extends:
+      service: .shared
+      file: docker-compose-server.tmpl.yml
+    container_name: locust
     image: locustio/locust
     ports:
       - "8089:8089"
@@ -120,7 +125,7 @@ services:
     environment:
       SERVER: python
     networks:
-      test_vnet:
+      benchmark_serving:
         ipv4_address: 172.16.0.7
     extra_hosts:
       - "go:172.16.0.2"
@@ -129,7 +134,7 @@ services:
       - "fastapi:172.16.0.8"
 
 networks:
-  test_vnet:
+  benchmark_serving:
     driver: bridge
     ipam:
       config:

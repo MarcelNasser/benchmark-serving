@@ -5,6 +5,7 @@ services:
   .server:
     container_name: server
     image: busybox
+    restart: always
     deploy:
       resources:
         limits:
@@ -12,8 +13,7 @@ services:
           ## is this Guy =>>
           cpus: '0.04'
           ## set a reasonable value according to the hardware
-          ## for a 12 cores CPU a value between 0.04 and 0.33
-          ## human translation: the bench will use between 0.5 and 4 cores
+          ## e.g. for a 12 cores CPU a value between 0.04-0.33 :: human translation: the bench will use between 0.5 and 4 cores
           memory: "150MB"
     hostname: server
     extra_hosts:
@@ -30,3 +30,13 @@ services:
         timeout: 10s
         retries: 6
         start_period: 10s
+
+  .shared:
+    container_name: shared-service
+    image: busybox
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: '2GB'
