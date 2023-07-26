@@ -24,7 +24,7 @@ in this repo we demonstrate the following:
 - targeting maximum traffic and a response time below [200ms](https://developers.google.com/speed/docs/insights/Server?hl=fr).
 
 
-- 0.5 cpu core are given to each server (equivalent to [4vcpus](https://www.datacenters.com/news/what-is-a-vcpu-and-how-do-you-calculate-vcpu-to-cpu)).
+- 0.5 cpu core are given to each server.
 
 ---
 ### result(s)
@@ -109,6 +109,7 @@ $ docker compose up -d
 
 The most critical parameter of the benchmark is the amount of CPU given to each server.
 
+
 update value here > [docker-compose-server.yml](./docker-compose-server.tmpl.yml)
 
 ````yaml
@@ -131,5 +132,9 @@ Then, update de deployment:
 ````bash
 $ docker compose up -d
 ````
+---
+### red flag
 
-
+**beware of the concurrent access to the same hardware. do not set absurdly high CPU values. always refer to the monitoring as the proof of truth:**
+- **shared services must have CPU values far from the limit**
+- **server must have CPU values close to the limit**
