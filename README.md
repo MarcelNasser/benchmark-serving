@@ -38,7 +38,7 @@ synthetic results.
 | go      | 400   | 150    |
 | nodejs  | 490   | 170    |
 | python  | 90    | 30     |
-| fastapi | 74    | 40     |
+| fastapi | 75    | 40     |
 
 *maximum users connected with a [reasonable](https://developers.google.com/speed/docs/insights/Server?hl=fr) response time.
 

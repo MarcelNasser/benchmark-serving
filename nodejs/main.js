@@ -4,7 +4,7 @@ const http = require('http');
 
 const port = 8000;
 
-const redis_connexion="redis://"+process.env.USERNAME+":"+process.env.PASSWORD+"@redis:6379/"+process.env.DB
+const redis_connexion="redis://redis:6379/"+process.env.DB
 console.log('redis_connexion=',redis_connexion);
 const client = redis.createClient(
       {url: redis_connexion}
