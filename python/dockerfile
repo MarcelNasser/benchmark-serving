@@ -2,7 +2,7 @@ FROM python:3.10-alpine3.18 as pre-build
 
 WORKDIR /build
 
-ARG REDIS_VERSION=0.6.0
+ARG REDIS_VERSION=4.6.0
 
 
 #For python compilation into a single binary

@@ -33,7 +33,7 @@ package(s):
 
 | package       | version |
 |---------------|---------|
-| redis(python) | 0.6.0   |
+| redis(python) | 4.6.0   |
 | redis(go)     | v9.0.5  |
 | redis(nodejs) | 4.6.7   |
 | fastapi       | 0.100.0 |

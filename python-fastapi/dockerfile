@@ -4,7 +4,7 @@ WORKDIR /build
 
 ARG FASTAPI_VERSION=0.100.0
 ARG UVICORN_VERSION=0.23.0
-ARG REDIS_VERSION=0.6.0
+ARG REDIS_VERSION=4.6.0
 
 
 #For python compilation into a single binary

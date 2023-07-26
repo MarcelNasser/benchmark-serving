@@ -25,15 +25,18 @@ define a load protocol. example:
 2. define the host: http://python:8000 or http://fastapi:8000 or http://go:8000 or http://nodejs:8000
 3. quick the bench
 4. one minute later increases user connexions to 200
-5. then 500
-6. after 10 minutes, stop the bench
+5. then 500 
+6. wait the behavior becomes steady
+7. then drop back 100
+8. then stop the bench
 ````
 ---
 for each load bench save the [stats/report](http://localhost:8089/stats/report) 
 
-- `go` => [report](./reports/report_go.html)
-- `fastapi` => [report](./reports/report_fastapi.html)
-- `python` => [report](./reports/report_python.html)
+- `fastapi` => [report](./reports/report_fastapi.png)
+- `go` => [report](./reports/report_go.png)
+- `nodejs` => [report](./reports/report_nodejs.png)
+- `python` => [report](./reports/report_python.png)
 
 
 ---
@@ -42,10 +45,20 @@ resources monitoring => [localhost:3000](http://localhost:3000/containers/docker
 
 ---
 
-comments from our own bench campaign (all server are given 0.5 CPUs):
+the results are self-explanatory.
 
-- `go` is faster by an order of magnitude.
-- `go` performance degrades less with number of connexions. 
-- `python` is way slower.
-- `python` performance dramatically collapse with higher loads. The response times skyrocket!
-- `fastapi` response time is better than python native Server library. But Fastapi is not that fast...
+
+- go =>>
+![report](./reports/report_go.png)
+
+
+- nodejs =>>
+![report](./reports/report_nodejs.png)
+
+
+- fastapi =>>
+![report](./reports/report_fastapi.png)
+
+
+- python =>>
+![report](./reports/report_python.png)
