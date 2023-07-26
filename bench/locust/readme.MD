@@ -1,4 +1,15 @@
-## benchmark with lotus
+# benchmark with lotus
+
+---
+### red flag
+
+**beware of the concurrent access to the same hardware. do not set absurdly high CPU values. always refer to the monitoring as the proof of truth:**
+- **shared services must have CPU values far from the limit**
+- **server must have CPU values close to the limit**
+
+---
+
+### deployment
 
 lotus is already deployed with docker compose stack.
 
