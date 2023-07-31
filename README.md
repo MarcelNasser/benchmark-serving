@@ -12,7 +12,7 @@ in this repo we demonstrate the following:
 
 **" a well-rounded pythonic app will cost you 5 times more "**
 
-**" hardware sizes for python apps is not magical thinking "**
+**" hardware sizing is not magical thinking "**
 
 **" performance degradation of webapps can be predicted and compromised "**
 
