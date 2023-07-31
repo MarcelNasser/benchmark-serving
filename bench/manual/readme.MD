@@ -1,6 +1,6 @@
-## benchmark manual
+## benchmark bash
 
-require bash.
+requires [bash](https://www.gnu.org/software/bash/).
 
 run the benchmark:
 ````bash
