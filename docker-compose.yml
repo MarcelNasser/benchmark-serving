@@ -11,7 +11,7 @@ services:
     image: redis:latest
     networks:
       benchmark_serving:
-        ipv4_address: 172.16.0.5
+        ipv4_address: 172.16.0.22
 
   # go-server:
   ## server can be reached through the private address
@@ -20,7 +20,7 @@ services:
       service: .server
       file: docker-compose-server.tmpl.yml
     container_name: go-server
-    image: marcelndeffo/tests:go-helloworld
+    image: marcelndeffo/builds:go-helloworld
     build: go
     ports:
       - "8002:8000"
@@ -37,7 +37,7 @@ services:
       service: .server
       file: docker-compose-server.tmpl.yml
     container_name: python-server
-    image: marcelndeffo/tests:python-helloworld
+    image: marcelndeffo/builds:python-helloworld
     build:
       context: python
       dockerfile: dockerfile
@@ -56,17 +56,17 @@ services:
       service: .server
       file: docker-compose-server.tmpl.yml
     container_name: python-fastapi
-    image: marcelndeffo/tests:fastapi-helloworld
+    image: marcelndeffo/builds:fastapi-helloworld
     build:
       context: python-fastapi
       dockerfile: dockerfile
     ports:
       - "8001:8000"
     environment:
-      DB: 3
+      DB: 2
     networks:
       benchmark_serving:
-        ipv4_address: 172.16.0.8
+        ipv4_address: 172.16.0.4
 
   # nodejs-server:
   ## server can be reached through the private address
@@ -75,15 +75,32 @@ services:
       service: .server
       file: docker-compose-server.tmpl.yml
     container_name: nodejs-server
-    image: marcelndeffo/tests:nodejs-helloworld
+    image: marcelndeffo/builds:nodejs-helloworld
     build: nodejs
     ports:
       - "8003:8000"
     environment:
-      DB: 2
+      DB: 3
     networks:
       benchmark_serving:
-        ipv4_address: 172.16.0.4
+        ipv4_address: 172.16.0.5
+
+  # rust-server:
+  ## server can be reached through the private address
+#  rust-server:
+#    extends:
+#      service: .server
+#      file: docker-compose-server.tmpl.yml
+#    container_name: rust-server
+#    image: marcelndeffo/builds:rust-helloworld
+#    build: rust
+#    ports:
+#      - "8004:8000"
+#    environment:
+#      DB: 4
+#    networks:
+#      benchmark_serving:
+#        ipv4_address: 172.16.0.6
 
   monitoring:
     extends:
@@ -95,7 +112,7 @@ services:
       - "3000:8080"
     networks:
       benchmark_serving:
-        ipv4_address: 172.16.0.6
+        ipv4_address: 172.16.0.20
     volumes:
       - "/var/lib/docker/:/var/lib/docker:ro"
       - "/dev/disk/:/dev/disk:ro"
@@ -118,12 +135,13 @@ services:
       SERVER: python
     networks:
       benchmark_serving:
-        ipv4_address: 172.16.0.7
+        ipv4_address: 172.16.0.21
     extra_hosts:
       - "go:172.16.0.2"
       - "python:172.16.0.3"
-      - "nodejs:172.16.0.4"
-      - "fastapi:172.16.0.8"
+      - "fastapi:172.16.0.4"
+      - "nodejs:172.16.0.5"
+      - "rust:172.16.0.6"
 
 networks:
   benchmark_serving:

@@ -1,0 +1,5 @@
+main/target/release/build/
+**/debug/
+**/.fingerprint/
+.cargo-lock
+

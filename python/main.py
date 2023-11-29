@@ -24,12 +24,15 @@ except Exception as e:
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(HTTPStatus.OK)
-        self.end_headers()
+
         # read DB
         try:
+            self.send_response(HTTPStatus.OK)
+            self.end_headers()
             self.wfile.write(f"Python Server: Hello, {r.get('Hello')}!".encode())
         except Exception as e:
+            self.send_response(HTTPStatus.INTERNAL_SERVER_ERROR)
+            self.end_headers()
             logger.error(e)
             self.wfile.write(f"Python Server: Error: {e}!".encode())
 

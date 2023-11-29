@@ -35,4 +35,4 @@ jobs:
       with:
         context: "{{defaultContext}}:${{ matrix.target }}"
         push: true
-        tags: marcelndeffo/tests:${{ matrix.tag }}
+        tags: marcelndeffo/builds:${{ matrix.tag }}
