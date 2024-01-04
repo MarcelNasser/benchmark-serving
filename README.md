@@ -2,9 +2,9 @@
 
 ![example workflow](https://github.com/MarcelNasser/benchmark-serving/actions/workflows/docker.yml/badge.svg)
 
----
 
-### claim(s)
+
+## statement(s)
 
 in this repo we demonstrate the following:
 
@@ -16,9 +16,9 @@ in this repo we demonstrate the following:
 
 **" performance degradation of webapps can be predicted and compromised "**
 
----
 
-### assumption(s)
+
+## assumption(s)
 
 - hello-world servers `go` and `python` and `nodejs` talking to a database.
 
@@ -26,8 +26,8 @@ in this repo we demonstrate the following:
 - targeting maximum traffic and a response time below [200ms](https://developers.google.com/speed/docs/insights/Server?hl=fr).
 
 
----
-### result(s)
+
+## result(s)
 
 synthetic results.
 
@@ -64,8 +64,8 @@ synthetic results.
 *maximum users connected with a [reasonable](https://developers.google.com/speed/docs/insights/Server?hl=fr) response time.
 
 
----
-### version(s)
+
+## version(s)
 
 language(s):
 
@@ -92,8 +92,8 @@ package(s):
 | uvicorn       | 0.23.0  |
 
 
----
-### deployment
+
+## deployment
 
 
 - tests carried with [docker](https://docs.docker.com/engine/install/).
@@ -118,8 +118,8 @@ $ docker compose up -d
   - go `hello-world` => [localhost:8002](http://localhost:8002)
   - nodejs `hello-world` => [localhost:8003](http://localhost:8003)
 
----
-### benchmark(s)
+
+## benchmark(s)
 
 
 - benchmark #1: `locust` => [doc](./bench/locust/readme.MD)
@@ -155,8 +155,8 @@ Then, update de deployment:
 ````bash
 $ docker compose up -d
 ````
----
-### red flag
+
+## red flag
 
 **beware of the concurrent access to the same hardware. do not set absurdly high CPU values. always refer to the monitoring as the proof of truth:**
 - **shared services must have CPU values far from the limit**
